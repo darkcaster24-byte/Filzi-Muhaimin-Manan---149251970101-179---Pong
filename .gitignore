@@ -7,4 +7,3 @@ obj/*
  
 .vsconfig 
 *.sln 
-*.csproj
