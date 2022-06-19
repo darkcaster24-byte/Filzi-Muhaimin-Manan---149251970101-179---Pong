@@ -7,6 +7,13 @@ public class BallController : MonoBehaviour
     public Vector2 speed;
     private Rigidbody2D rig;
     public Vector2 resetPosition;
+
+    public float speedUp;
+    public int speedUpDuration;
+    private int speedUpCount=0;
+    private float timer;
+    public bool paddle;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +24,16 @@ public class BallController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(speedUpCount>0)
+        {
+            timer+=Time.deltaTime;
+            if(timer > speedUpDuration)
+            {
+                rig.velocity/=speedUp;
+                speedUpCount-=1;
+                timer-=speedUpDuration;
+            }
+        }
     }
 
     public void ResetBall()
@@ -27,6 +43,22 @@ public class BallController : MonoBehaviour
 
     public void ActivatePUSpeedUp(float magnitude)
     {
+        speedUp=magnitude;
         rig.velocity *= magnitude;
+        speedUpCount +=1;
+        timer=0;
+    }
+
+    //menyimpan interaksi terakhir antara bola dengan padel
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag=="rightPaddle")
+        {
+            paddle=true;            
+        }
+        if(collision.gameObject.tag=="leftPaddle")
+        {
+            paddle=false;            
+        }
     }
 }

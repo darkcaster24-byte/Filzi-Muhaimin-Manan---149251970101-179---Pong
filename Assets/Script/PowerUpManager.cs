@@ -13,6 +13,8 @@ public class PowerUpManager : MonoBehaviour
     public int spawnInterval;
     private float timer;
 
+    
+
     private List<GameObject> powerUpList;
     // Start is called before the first frame update
     public void GenerateRandomPowerUp()
